@@ -1,0 +1,41 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="About"
+  description="About this Astro static website boilerplate and its architecture."
+>
+  <div class="mx-auto max-w-4xl px-4 py-16 sm:px-6 lg:px-8">
+    <header class="mb-10 text-center sm:text-left">
+      <h1 class="text-3xl font-extrabold tracking-tight text-content-primary sm:text-4xl">
+        About This Boilerplate
+      </h1>
+      <p class="mt-2 text-lg text-content-secondary">
+        Crafted for speed, simplicity, and effortless static deployment.
+      </p>
+    </header>
+
+    <div class="prose prose-slate max-w-none text-content-secondary space-y-6">
+      <section class="rounded-xl border border-surface-border bg-surface-card p-6">
+        <h2 class="text-xl font-bold text-content-primary">Philosophy & Goals</h2>
+        <p class="mt-2 leading-relaxed">
+          Modern web development often introduces unnecessary complexity with server runtimes, hydrating heavy client-side JavaScript, and ongoing maintenance. This template restores simplicity:
+        </p>
+        <ul class="mt-3 list-disc pl-5 space-y-1">
+          <li><strong>Pure Static HTML:</strong> Astro generates static HTML files during build time.</li>
+          <li><strong>Zero Runtime Dependencies:</strong> Runs on standard Apache web servers (Hostinger, cPanel) without Node.js.</li>
+          <li><strong>Low Hosting Costs:</strong> Host multiple sites simultaneously on inexpensive shared hosting plans.</li>
+          <li><strong>Exceptional Lighthouse Scores:</strong> 100/100 performance, accessibility, best practices, and SEO.</li>
+        </ul>
+      </section>
+
+      <section class="rounded-xl border border-surface-border bg-surface-card p-6">
+        <h2 class="text-xl font-bold text-content-primary">Deployment on Hostinger</h2>
+        <p class="mt-2 leading-relaxed">
+          The output directory is <code class="rounded bg-surface-bg px-1.5 py-0.5 text-xs text-brand-600 font-mono">dist/</code>. Simply upload the files via Hostinger File Manager into <code class="rounded bg-surface-bg px-1.5 py-0.5 text-xs text-brand-600 font-mono">public_html/</code>, or push via FTP. The pre-configured <code class="rounded bg-surface-bg px-1.5 py-0.5 text-xs text-brand-600 font-mono">.htaccess</code> takes care of caching, gzip, and clean URLs automatically.
+        </p>
+      </section>
+    </div>
+  </div>
+</BaseLayout>

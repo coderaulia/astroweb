@@ -1,0 +1,26 @@
+---
+import { SITE_CONFIG } from '../lib/constants';
+
+const currentYear = new Date().getFullYear();
+---
+
+<footer class="mt-auto border-t border-surface-border bg-surface-card py-8 text-sm text-content-secondary">
+  <div class="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 px-4 sm:flex-row sm:px-6 lg:px-8">
+    <p class="text-center sm:text-left">
+      &copy; {currentYear} {SITE_CONFIG.title}. All rights reserved.
+    </p>
+
+    <div class="flex items-center gap-6">
+      {
+        SITE_CONFIG.footerLinks.map((link) => (
+          <a
+            href={link.href}
+            class="transition-colors hover:text-brand-600"
+          >
+            {link.label}
+          </a>
+        ))
+      }
+    </div>
+  </div>
+</footer>
