@@ -19,6 +19,9 @@ pnpm dev
 # (or background mode for automated workflows)
 astro dev --background
 
+# Initialize / customize site title, URL, author
+pnpm init:site
+
 # Build static site for production (outputs to dist/)
 pnpm build
 

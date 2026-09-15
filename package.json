@@ -9,6 +9,7 @@
     "dev": "astro dev",
     "build": "astro build",
     "build:zip": "astro build && (cd dist && zip -rq ../dist.zip .)",
+    "init:site": "node scripts/init-site.mjs",
     "preview": "astro preview",
     "astro": "astro"
   },

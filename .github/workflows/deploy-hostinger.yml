@@ -1,0 +1,57 @@
+name: Deploy to Hostinger
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-hostinger
+  cancel-in-progress: true
+
+jobs:
+  build-and-deploy:
+    name: Build & Deploy to Hostinger
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 11
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: 'pnpm'
+
+      - name: Install Dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build Static Site
+        run: pnpm build
+
+      - name: Verify FTP Secrets Configuration
+        id: check-secrets
+        run: |
+          if [ -z "${{ secrets.FTP_SERVER }}" ] || [ -z "${{ secrets.FTP_USERNAME }}" ] || [ -z "${{ secrets.FTP_PASSWORD }}" ]; then
+            echo "::warning title=Hostinger FTP Secrets Missing::Repository secrets (FTP_SERVER, FTP_USERNAME, FTP_PASSWORD) are not configured. Skipping FTP upload. Add them under Settings -> Secrets and variables -> Actions to enable auto-deployment."
+            echo "SECRETS_AVAILABLE=false" >> $GITHUB_OUTPUT
+          else
+            echo "SECRETS_AVAILABLE=true" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Sync to Hostinger via FTP
+        if: steps.check-secrets.outputs.SECRETS_AVAILABLE == 'true'
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          local-dir: ./dist/
+          server-dir: ${{ vars.FTP_SERVER_DIR || secrets.FTP_SERVER_DIR || 'public_html/' }}
+          dangerous-clean-slate: false

@@ -8,16 +8,24 @@ This document outlines the architectural decisions, directory layout, and conven
 
 ```
 astroweb/
+├── .github/
+│   └── workflows/               # Automated CI/CD pipelines
+│       ├── ci.yml               # PR verification
+│       ├── deploy-github-pages.yml # Optional GitHub Pages preview deploy
+│       └── deploy-hostinger.yml # Automated FTP sync to Hostinger on push
 ├── docs/                        # Project documentation
 │   ├── ARCHITECTURE.md          # Architecture & conventions (this file)
 │   ├── CONTENT.md               # Page and content creation guide
-│   ├── DEPLOY.md                # Hostinger static deployment guide
+│   ├── DEPLOY.md                # Hostinger manual upload guide
+│   ├── MULTI_SITE.md            # Multi-site template & CI/CD deployment guide
 │   └── SETUP.md                 # Local setup and workflow
 ├── public/                      # Static assets served as-is at root
 │   ├── .htaccess                # Apache caching, gzip, clean URLs & security
 │   ├── favicon.ico              # Legacy favicon
 │   ├── favicon.svg              # Modern vector favicon
 │   └── robots.txt               # Search crawler instructions
+├── scripts/
+│   └── init-site.mjs            # Quick CLI site personalization wizard
 ├── src/
 │   ├── assets/                  # Optimized image & media assets (processed by astro:assets)
 │   │   └── hero-illustration.svg
