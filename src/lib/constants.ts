@@ -12,6 +12,7 @@ export const SITE_CONFIG = {
   footerLinks: [
     { label: 'Privacy Policy', href: '/privacy' },
     { label: 'Terms', href: '/terms' },
+    { label: 'RSS Feed', href: '/rss.xml' },
     { label: 'Sitemap', href: '/sitemap-index.xml' },
   ],
 } as const;
