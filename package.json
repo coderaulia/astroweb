@@ -8,7 +8,7 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
-    "build:zip": "astro build && (cd dist && zip -rq ../dist.zip .)",
+    "build:zip": "astro build && node scripts/build-zip.mjs",
     "init:site": "node scripts/init-site.mjs",
     "preview": "astro preview",
     "astro": "astro"
@@ -23,5 +23,9 @@
   },
   "allowScripts": {
     "esbuild": true
+  },
+  "devDependencies": {
+    "@tailwindcss/typography": "^0.5.20",
+    "archiver": "^8.0.0"
   }
 }

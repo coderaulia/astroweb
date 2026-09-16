@@ -1,0 +1,50 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { SITE_CONFIG } from '../lib/constants';
+---
+
+<BaseLayout
+  title="Terms of Service"
+  description={`Terms of Service for ${SITE_CONFIG.title}.`}
+>
+  <div class="mx-auto max-w-4xl px-4 py-16 sm:px-6 lg:px-8">
+    <header class="mb-10 text-center sm:text-left">
+      <h1 class="text-3xl font-extrabold tracking-tight text-content-primary sm:text-4xl">
+        Terms of Service
+      </h1>
+      <p class="mt-2 text-lg text-content-secondary">
+        Last updated: {new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+      </p>
+    </header>
+
+    <div class="space-y-6 text-content-secondary leading-relaxed">
+      <section class="rounded-xl border border-surface-border bg-surface-card p-6">
+        <h2 class="text-xl font-bold text-content-primary">1. Agreement to Terms</h2>
+        <p class="mt-2">
+          By accessing or using <strong>{SITE_CONFIG.title}</strong>, you agree to be bound by these Terms of Service. If you do not agree with any of these terms, you are prohibited from using or accessing this site.
+        </p>
+      </section>
+
+      <section class="rounded-xl border border-surface-border bg-surface-card p-6">
+        <h2 class="text-xl font-bold text-content-primary">2. Intellectual Property</h2>
+        <p class="mt-2">
+          All content, features, and functionality on this website (including but not limited to text, graphics, logos, and software) are the exclusive property of {SITE_CONFIG.title} or its licensors and are protected by copyright, trademark, and other applicable intellectual property laws.
+        </p>
+      </section>
+
+      <section class="rounded-xl border border-surface-border bg-surface-card p-6">
+        <h2 class="text-xl font-bold text-content-primary">3. Disclaimer</h2>
+        <p class="mt-2">
+          The materials on this website are provided on an 'as is' basis without warranties of any kind, whether express or implied. {SITE_CONFIG.title} disclaims all warranties, including without limitation warranties of merchantability, fitness for a particular purpose, and non-infringement.
+        </p>
+      </section>
+
+      <section class="rounded-xl border border-surface-border bg-surface-card p-6">
+        <h2 class="text-xl font-bold text-content-primary">4. Governing Law</h2>
+        <p class="mt-2">
+          These terms and conditions are governed by and construed in accordance with applicable laws, without regard to conflict of law provisions.
+        </p>
+      </section>
+    </div>
+  </div>
+</BaseLayout>
