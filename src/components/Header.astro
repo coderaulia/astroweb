@@ -19,7 +19,8 @@ const { currentPath = Astro.url.pathname } = Astro.props;
       </a>
     </div>
 
-    <nav aria-label="Main Navigation" class="flex items-center gap-6 text-sm font-medium">
+    <!-- Desktop Navigation -->
+    <nav aria-label="Main Navigation" class="hidden sm:flex items-center gap-6 text-sm font-medium">
       {
         SITE_CONFIG.navLinks.map((link) => {
           const isActive = currentPath === link.href || (link.href !== '/' && currentPath.startsWith(link.href));
@@ -38,5 +39,49 @@ const { currentPath = Astro.url.pathname } = Astro.props;
         })
       }
     </nav>
+
+    <!-- Mobile Navigation (Zero-JS via native <details>) -->
+    <details class="group sm:hidden relative">
+      <summary
+        class="flex h-10 w-10 items-center justify-center rounded-lg border border-surface-border bg-surface-card text-content-secondary hover:bg-surface-bg hover:text-content-primary focus:outline-none focus:ring-2 focus:ring-brand-500 cursor-pointer list-none [&::-webkit-details-marker]:hidden"
+        aria-label="Toggle navigation menu"
+      >
+        <!-- Hamburger Icon -->
+        <svg class="h-5 w-5 group-open:hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="4" y1="6" x2="20" y2="6" />
+          <line x1="4" y1="12" x2="20" y2="12" />
+          <line x1="4" y1="18" x2="20" y2="18" />
+        </svg>
+        <!-- Close Icon -->
+        <svg class="h-5 w-5 hidden group-open:block" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18" />
+          <line x1="6" y1="6" x2="18" y2="18" />
+        </svg>
+      </summary>
+
+      <div class="absolute right-0 top-12 z-50 min-w-[200px] rounded-xl border border-surface-border bg-surface-card p-3 shadow-xl">
+        <nav aria-label="Mobile Navigation" class="flex flex-col gap-1 text-sm font-medium">
+          {
+            SITE_CONFIG.navLinks.map((link) => {
+              const isActive = currentPath === link.href || (link.href !== '/' && currentPath.startsWith(link.href));
+              return (
+                <a
+                  href={link.href}
+                  class:list={[
+                    'rounded-lg px-3 py-2 transition-colors',
+                    isActive
+                      ? 'bg-brand-50 text-brand-600 font-semibold dark:bg-brand-950/60 dark:text-brand-300'
+                      : 'text-content-secondary hover:bg-surface-bg hover:text-content-primary',
+                  ]}
+                  aria-current={isActive ? 'page' : undefined}
+                >
+                  {link.label}
+                </a>
+              );
+            })
+          }
+        </nav>
+      </div>
+    </details>
   </div>
 </header>

@@ -1,0 +1,65 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import PostCard from '../../../components/PostCard.astro';
+import { getCollection, type CollectionEntry } from 'astro:content';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog', ({ data }) => !data.draft);
+  const allTags = [...new Set(posts.flatMap((post) => post.data.tags))];
+
+  return allTags.map((tag) => {
+    const filteredPosts = posts
+      .filter((post) => post.data.tags.includes(tag))
+      .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+
+    return {
+      params: { tag },
+      props: {
+        tag,
+        posts: filteredPosts,
+      },
+    };
+  });
+}
+
+interface Props {
+  tag: string;
+  posts: CollectionEntry<'blog'>[];
+}
+
+const { tag, posts } = Astro.props;
+---
+
+<BaseLayout
+  title={`Posts tagged #${tag}`}
+  description={`Browse all blog articles tagged with #${tag}.`}
+>
+  <div class="mx-auto max-w-4xl px-4 py-12 sm:px-6 lg:px-8">
+    <div class="mb-8">
+      <a
+        href="/blog/"
+        class="inline-flex items-center gap-1 text-sm font-semibold text-brand-600 hover:text-brand-700"
+      >
+        <span aria-hidden="true">&larr;</span> Back to all articles
+      </a>
+    </div>
+
+    <header class="mb-10 text-center sm:text-left border-b border-surface-border pb-8">
+      <div class="inline-flex items-center rounded-full bg-brand-100 px-3 py-1 text-xs font-semibold text-brand-700 dark:bg-brand-900/50 dark:text-brand-300 mb-3">
+        Tag Filter
+      </div>
+      <h1 class="text-3xl font-extrabold tracking-tight text-content-primary sm:text-4xl">
+        Articles tagged with <span class="text-brand-600">#{tag}</span>
+      </h1>
+      <p class="mt-2 text-base text-content-secondary">
+        Showing {posts.length} {posts.length === 1 ? 'article' : 'articles'} filed under this tag.
+      </p>
+    </header>
+
+    <div class="space-y-6">
+      {posts.map((post) => (
+        <PostCard post={post} />
+      ))}
+    </div>
+  </div>
+</BaseLayout>
